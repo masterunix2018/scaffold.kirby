@@ -32,7 +32,7 @@
       "rsync -va --delete --progress --update dist/ $npm_package_config_remote_production_user@$npm_package_config_remote_production_host:$npm_package_config_remote_production_path/",
     "build:css": "postcss assets/css/_main.css -o assets/css/style.css -w",
     "build:css:production":
-      "postcss assets/css/_main.css -o dist/assets/css/style.css -e production",
+      "NODE_ENV=production postcss assets/css/_main.css -o dist/assets/css/style.css -e production",
     "webpack": "NODE_ENV=development webpack --mode development",
     "webpack:production": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "serve": "npm-run-all -p php browser-sync webpack build:css",

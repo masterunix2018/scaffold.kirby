@@ -1,7 +1,8 @@
 module.exports = ctx => ({
-  plugins: {
-    'postcss-import': true,
-    'postcss-cssnext': true,
-    cssnano: ctx.env === 'production' ? { preset: 'default' } : false
-  }
+  plugins: [
+    require('postcss-import'),
+    require('postcss-cssnext'),
+    require('tailwindcss')('./tailwind.js'),
+    ctx.env === 'production' ? require('cssnano')({}) : false
+  ]
 });
