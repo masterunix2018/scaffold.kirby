@@ -44,6 +44,7 @@
     "sitemap-generator": "node sitemap-generator.js"
   },
   "devDependencies": {
+    "npm-run-all": "^4.1.2",
     "@babel/core": "*",
     "@babel/plugin-proposal-class-properties": "*",
     "@babel/plugin-proposal-object-rest-spread": "*",
@@ -64,6 +65,7 @@
     "style-loader": "^0.21.0",
     "webpack": "*",
     "webpack-merge": "*",
-    "compression-webpack-plugin": "^1.1.11"
+    "compression-webpack-plugin": "^1.1.11",
+    "webpack-cli": "^2.1.2"
   }
 }
