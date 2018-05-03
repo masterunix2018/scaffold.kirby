@@ -1,0 +1,2 @@
+# scaffold.kirby
+Kirby Scaffolder
