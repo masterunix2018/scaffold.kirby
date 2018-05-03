@@ -1,0 +1,69 @@
+{
+  "name": "[NAME]",
+  "config": {
+    "remote": {
+      "staging": {
+        "host": "www.bramloosveld.be",
+        "user": "bramloos",
+        "path": "/home/bramloos/public_html/[NAME]"
+      },
+      "production": {
+        "host": "www.crispclean.be",
+        "user": "",
+        "path": ""
+      }
+    }
+  },
+  "scripts": {
+    "gittower": "gittower [NAME].kirby",
+    "key":
+      "scp ~/.ssh/id_rsa.pub $npm_package_config_remote_production_user@$npm_package_config_remote_production_host:/home/bramloos/.ssh/authorized_keys",
+    "clean": "echo '=> clean dist folder' && rm -rf dist",
+    "copy":
+      "echo '=> copy files 2 dist' && rsync -a --delete ./ dist --exclude /.gitignore --exclude /.gitmodules --exclude /.npmignore --exclude /bs-config.js --exclude /sftp-config.json --exclude /webpack.config.js --exclude /webpack.prod.js --exclude /node_modules --exclude /dist --exclude /.git --exclude /postcss.config.js --exclude /assets/js/scripts.js",
+    "imagemin": "echo '=> imagemin' && imagemin assets/images dist/assets/images -p",
+    "php": "php -S 127.0.0.1:9062 >& /dev/null",
+    "browser-sync": "browser-sync start --config bs-config.js",
+    "sync:content":
+      "echo '=> sync:content' && rsync -va --delete --progress --update $npm_package_config_remote_staging_user@$npm_package_config_remote_staging_host:$npm_package_config_remote_staging_path/content/ content",
+    "sync:2staging":
+      "rsync -va --delete --progress --update dist/ $npm_package_config_remote_staging_user@$npm_package_config_remote_staging_host:$npm_package_config_remote_staging_path/",
+    "sync:2production":
+      "rsync -va --delete --progress --update dist/ $npm_package_config_remote_production_user@$npm_package_config_remote_production_host:$npm_package_config_remote_production_path/",
+    "build:css": "postcss assets/css/_main.css -o assets/css/style.css -w",
+    "build:css:production":
+      "postcss assets/css/_main.css -o dist/assets/css/style.css -e production",
+    "webpack": "NODE_ENV=development webpack --mode development",
+    "webpack:production": "NODE_ENV=production webpack --config webpack.config.prod.js",
+    "serve": "npm-run-all -p php browser-sync webpack build:css",
+    "start": "npm run serve -s",
+    "build": "npm-run-all clean copy build:css:production webpack:production imagemin",
+    "deploy:staging": "npm-run-all build sync:2staging",
+    "deploy:production": "npm-run-all build sync:2production",
+    "link-checker": "blc http://localhost:3000 -ro",
+    "sitemap-generator": "node sitemap-generator.js"
+  },
+  "devDependencies": {
+    "@babel/core": "*",
+    "@babel/plugin-proposal-class-properties": "*",
+    "@babel/plugin-proposal-object-rest-spread": "*",
+    "@babel/preset-env": "*",
+    "babel-loader": "^8.0.0-beta",
+    "tailwindcss": "*",
+    "browser-sync": "*",
+    "css-loader": "^0.28.11",
+    "cssnano": "*",
+    "file-loader": "^1.1.11",
+    "imagemin": "*",
+    "imagemin-cli": "*",
+    "postcss": "*",
+    "postcss-cli": "*",
+    "postcss-cssnext": "*",
+    "postcss-import": "*",
+    "postcss-loader": "^2.1.4",
+    "style-loader": "^0.21.0",
+    "webpack": "*",
+    "webpack-merge": "*",
+    "compression-webpack-plugin": "^1.1.11"
+  }
+}
