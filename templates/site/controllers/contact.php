@@ -1,36 +1,40 @@
 <?php
 
+use Uniform\Form;
+
 return function($site, $pages, $page) {
 
-  $form = uniform('contact-form', array(
-        'required' => array(
-          'first_name' => '',
-          'family_name' => '',
-          'message' => '',
-          '_from' => 'email'
-        ),
-        'validate' => array(
-            'tel' => 'num'
-        ),
-        'actions'  => array(
-           array(
-              '_action' => 'email',
-              'to'      => 'bramloosveld@gmail.com',
-              'sender'  => 'info@blabla.be', //make sure sender exist with postmark sender & is verified
-              'subject' => 'Website: new contact',
-              'snippet' => 'uniform-template',
-              'service' => 'postmark',
-              'service-options' => array(
-                'key'    => '48892dab-eba2-4828-acfc-b0d18b42d551'
-              )
-           )
-        )
-     )
-  );
+  $form = new Form([
+    'firstname' => [
+     'rules' => ['required'],
+     'message' => 'Firstname is required.',
+    ],
+    'lastname' => [
+     'rules' => ['required'],
+     'message' => 'Lastname is required.',
+    ],
+    'email' => [
+     'rules' => ['required', 'email'],
+     'message' => 'Email is required.',
+    ],
+    'message' => [],
+  ]);
+
+  //smtp service toegevoegd (Postmark), zie email_services.php voor meer info.
+  //is omdat mailen anders niet lukt op localhost
+  //mailen lukt nu enkel "from" bram@crispclean.be omdat info@gloribox.be nog niet is goedgekeurd door Ann
+  if (r::is('POST')) {
+    $form->emailAction([
+      'to' => 'bramloosveld@gmail.com',
+      'from' => 'info@.eu',
+      'subject' => 'New message from the contact form',
+      'service' => 'postmark',
+      'service-options' => ['key'=>'c6d1faf1-2118-4a49-baaa-d5f935aaad8a']
+    ]);
+  }
 
   return compact('form');
 
 };
 
-//http://blog.the-inspired-ones.de/kirby-with-uniform
 //https://github.com/mzur/kirby-uniform

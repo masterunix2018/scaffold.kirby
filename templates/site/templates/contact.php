@@ -1,57 +1,63 @@
-<?php snippet('header') ?>
+<?php snippet('header')?>
 
-  <main>
+<main>
 
-    <div class="mx-auto max-width-4">
+  <div class="mx-auto container">
+
+    <form action="<?php echo $page->url() ?>" method="post">
+
+      <div class="required mb-4 <?php e($form->error('firstname'), 'validation')?>">
+        <label for="firstname">Voornaam</label>
+        <?php if ($form->error('firstname')): ?>
+            <div class="validation-error"><?php echo implode('<br>', $form->error('firstname')) ?></div>
+        <?php endif;?>
+        <input class="border w-full py-2 px-3 text-grey-darker" type="text" name="firstname" value="<?php echo $form->old('firstname'); ?>" required/>
+      </div>
+      <div class="required mb-4 <?php e($form->error('lastname'), 'validation')?>">
+        <label for="lastname">Familienaam</label>
+        <?php if ($form->error('lastname')): ?>
+            <div class="validation-error"><?php echo implode('<br>', $form->error('lastname')) ?></div>
+        <?php endif;?>
+        <input class="border w-full py-2 px-3 text-grey-darker" type="text" name="lastname" value="<?php echo $form->old('lastname'); ?>" required/>
+      </div>
+      <div class="required mb-4 <?php e($form->error('email'), 'validation')?>">
+        <label for="email">Email</label>
+        <?php if ($form->error('email')): ?>
+            <div class="validation-error"><?php echo implode('<br>', $form->error('email')) ?></div>
+        <?php endif;?>
+        <input class="border w-full py-2 px-3 text-grey-darker" type="text" name="email" value="<?php echo $form->old('email'); ?>" required/>
+      </div>
+      <div class="required mb-4 <?php e($form->error('message'), 'validation')?>">
+        <label for="message">Message</label>
+        <?php if ($form->error('message')): ?>
+            <div class="validation-error"><?php echo implode('<br>', $form->error('message')) ?></div>
+        <?php endif;?>
+        <textarea class="border w-full py-2 px-3 text-grey-darker" type="text" name="message" value="<?php echo $form->old('message'); ?>" required/>
+      </div>
+
+      <?php echo csrf_field(); ?>
+
+      <?php echo honeypot_field(); ?>
 
       <?php if ($form->hasMessage()): ?>
-        <div class="alert <?php e($form->successful(), 'alert-success' , 'alert-warning')?>">
-          <?php $form->echoMessage() ?>
-        </div>
-      <?php endif; ?>
+      <div class="alert <?php e($form->success(), 'alert-success', 'alert-warning')?>">
+        <?php $form->echoMessage()?>
+      </div>
+      <?php endif;?>
 
-      <form action="<?php echo $page->url()?>" method="post">
+      <button class="bg-blue hover:bg-blue-dark text-white font-bold py-2 px-4 rounded" type="submit">Bestellen</button>
 
-        <div class="required <?php e($form->hasError('first_name'), 'has-error')?>">
-          <label for="first_name"><?php echo l::get('first-name'); ?></label>
-          <input class="input" type="text" name="first_name" id="first_name" value="<?php $form->echoValue('first_name') ?>" required/>
-        </div>
-        <div class="required <?php e($form->hasError('family_name'), 'has-error')?>">
-          <label for="family_name"><?php echo l::get('family-name'); ?></label>
-          <input class="input" type="text" name="family_name" id="family_name" value="<?php $form->echoValue('family_name') ?>" required/>
-        </div>
+    </form>
 
-        <div class="required <?php e($form->hasError('_from'), 'has-error')?>">
-          <label for="email"><?php echo l::get('email'); ?></label>
-          <input class="input" type="email" name="_from" id="email" value="<?php $form->echoValue('_from') ?>" required/>
-        </div>
+    <?php if ($form->success()): ?>
+      Success!
+    <?php else: ?>
+      <?php snippet('uniform/errors', ['form' => $form]);?>
+    <?php endif;?>
 
-        <div class="required <?php e($form->hasError('tel'), 'has-error')?>">
-          <label for="tel"><?php echo l::get('tel'); ?></label>
-          <input class="input" type="text" name="tel" id="tel" value="<?php $form->echoValue('tel') ?>" required/>
-        </div>
+  </div>
 
-        <div class="required">
-          <label for="message"><?php echo l::get('message'); ?></label>
-          <textarea name="message" rows="10" id="message"><?php $form->echoValue('message') ?></textarea>
-        </div>
-
-        <label class="uniform__potty" for="website">Please leave this field blank</label>
-        <input type="text" name="website" id="website" class="uniform__potty" />
-
-        <?php if ($form->hasMessage()): ?>
-        <div class="alert <?php e($form->successful(), 'alert-success' , 'alert-warning')?>">
-          <?php $form->echoMessage() ?>
-        </div>
-        <?php endif; ?>
-
-        <button class="button" type="submit" name="_submit" value="<?php echo $form->token() ?>"<?php e($form->successful(), ' disabled')?>><?php echo l::get('submit'); ?></button>
-
-      </form>
-
-    </div>
-
-  </main>
+</main>
 
 
-<?php snippet('footer') ?>
+<?php snippet('footer')?>
