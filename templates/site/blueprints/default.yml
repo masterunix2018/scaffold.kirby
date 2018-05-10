@@ -1,5 +1,11 @@
 title: Page
 pages: true
+options: 
+  preview: true
+  status: false
+  template: true
+  url: true
+  delete: false
 files: true
   sortable: true
 fields:
