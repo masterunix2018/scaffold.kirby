@@ -1,5 +1,5 @@
   <footer>
-    <div class="max-width-4">
+    <div class="container mx-auto">
       © <?php echo date('Y'); ?> <?php echo $site->copyright(); ?>
     </div>
   </footer>

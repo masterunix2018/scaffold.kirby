@@ -24,14 +24,14 @@
 
 <?php $p = ( $page->depth() == 1 ) ? $page : $page->parents()->last(); ?>
 
-<body class="flex flex-column <?php echo $p->id();?> <?php echo $page->intendedTemplate(); ?> <?php echo $page->slug(); ?>">
+<body class="<?php echo $p->id();?> <?php echo $page->intendedTemplate(); ?> <?php echo $page->slug(); ?>">
   <!--[if lt IE 9]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
   <header>
-    <nav class="max-width-4 mx-auto">
-      <a class="logo" href="/"></a>
+    <nav class="container mx-auto">
+      <a class="logo" href="/"><img src="../../assets/images/logo.png"/></a>
       <?php snippet('menu') ?>
     </nav>
   </header>

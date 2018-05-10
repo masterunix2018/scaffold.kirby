@@ -1,8 +1,9 @@
 <?php snippet('header'); ?>
 
-<main class="mb4 mt4">
-  <div class="mx-auto max-width-4">
+<main>
+  <div class="container mx-auto">
     <h1><?php echo $page->title(); ?></h1>
+    <?php echo html($page->kirbytext()); ?>
   </div>
 </main>
 
