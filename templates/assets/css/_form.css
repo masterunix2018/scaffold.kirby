@@ -69,3 +69,36 @@ label {
         background: lightgoldenrodyellow !important;
     }
 }
+
+.radio {
+    cursor: pointer;
+    display: flex;
+}
+
+.radio input[type='radio'] {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+}
+
+.radio span {
+    display: flex;
+    align-items: center;
+}
+
+.radio span:before {
+    display: block;
+    content: '';
+    background: white;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    border: 4px solid white;
+    box-shadow: 0 0 0 1px hsl(0, 0%, 75%);
+    box-sizing: content-box;
+    margin-right: 10px;
+}
+
+.radio input[type='radio']:checked+span:before {
+    background: gray;
+}
